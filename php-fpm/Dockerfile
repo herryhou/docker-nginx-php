@@ -1,5 +1,6 @@
 FROM php:5.6-fpm
  # Install modules
+ RUN ln -sf /usr/share/zoneinfo/Asia/Taipei  /etc/localtime
  RUN apt-get update && apt-get install -y \
          libfreetype6-dev \
          libjpeg62-turbo-dev \
