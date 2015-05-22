@@ -2,6 +2,7 @@ FROM php:5.6-fpm
  # Install modules
  RUN ln -sf /usr/share/zoneinfo/Asia/Taipei  /etc/localtime \
      && apt-get update && apt-get install -y \
+         unzip \
  		 freetds-dev \
          libfreetype6-dev \
          libjpeg62-turbo-dev \
@@ -17,7 +18,16 @@ FROM php:5.6-fpm
      && docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/ \
      && docker-php-ext-install gd \
      && pecl install igbinary \
-     && echo "extension=igbinary.so" > /usr/local/etc/php/conf.d/ext-igbinary.ini
+     && echo "extension=igbinary.so" > /usr/local/etc/php/conf.d/ext-igbinary.ini \
+
+     && cd /usr/src/php/ext/ \
+     && curl -LO https://github.com/phpredis/phpredis/archive/master.zip \
+     && unzip master.zip \
+     && mv phpredis-master redis \
+     && rm master.zip \
+     && docker-php-ext-configure redis --enable-redis-igbinary \
+     && docker-php-ext-install redis
+
  COPY ./php-fpm.conf /usr/local/etc/
  RUN cp  /usr/src/php/php.ini-production /usr/local/etc/php/php.ini && \
  	 echo 'date.timezone = "Asia/Taipei"' >> /usr/local/etc/php/php.ini
