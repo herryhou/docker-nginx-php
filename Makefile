@@ -17,3 +17,7 @@ rm:
 	docker rm phpserver
 	docker stop nginx
 	docker rm nginx
+
+build:
+	docker build -t mwnginx:1.0 .
+	docker build -t mwphp:fpm1.1 .

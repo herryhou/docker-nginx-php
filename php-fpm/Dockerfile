@@ -1,11 +1,16 @@
 FROM php:5.6-fpm
  # Install modules
- RUN ln -sf /usr/share/zoneinfo/Asia/Taipei  /etc/localtime
- RUN apt-get update && apt-get install -y \
+ RUN ln -sf /usr/share/zoneinfo/Asia/Taipei  /etc/localtime \
+     && apt-get update && apt-get install -y \
+ 		 freetds-dev \
+     	 freetds-common \
          libfreetype6-dev \
          libjpeg62-turbo-dev \
          libmcrypt-dev \
          libpng12-dev \
+     && ln -s /usr/lib/x86_64-linux-gnu/libsybdb.so.5 /usr/lib/libsybdb.so && ldconfig -v
+     && docker-php-ext-configure mssql --with-mssql \
+     && docker-php-ext-install mssql \
      && docker-php-ext-install iconv mcrypt \
      && docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/ \
      && docker-php-ext-install gd
