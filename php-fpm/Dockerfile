@@ -3,7 +3,7 @@ FROM php:5.6-fpm
  RUN ln -sf /usr/share/zoneinfo/Asia/Taipei  /etc/localtime \
      && apt-get update && apt-get install -y \
          unzip \
- 		 freetds-dev \
+         freetds-dev \
          libfreetype6-dev \
          libjpeg62-turbo-dev \
          libmcrypt-dev \
@@ -17,14 +17,19 @@ FROM php:5.6-fpm
      && docker-php-ext-install iconv mcrypt \
      && docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/ \
      && docker-php-ext-install gd \
-     && pecl install igbinary \
-     && echo "extension=igbinary.so" > /usr/local/etc/php/conf.d/ext-igbinary.ini \
 
-     && cd /usr/src/php/ext/ \
-     && curl -LO https://github.com/phpredis/phpredis/archive/master.zip \
-     && unzip master.zip \
-     && mv phpredis-master redis \
-     && rm master.zip \
+     && pecl install igbinary \
+     && docker-php-ext-install igbinary
+
+     && pecl install memcached \
+     && docker-php-ext-configure memcached --disable-memcached-session \
+     && docker-php-ext-install memcached
+
+     && pecl install memcache \
+     && docker-php-ext-configure memcache --enable-memcache --disable-memcache-session \
+     && docker-php-ext-install memcache
+
+     && pecl install redis \
      && docker-php-ext-configure redis --enable-redis-igbinary \
      && docker-php-ext-install redis
 
