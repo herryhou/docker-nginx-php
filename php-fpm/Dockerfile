@@ -35,7 +35,12 @@ FROM php:5.6-fpm
 
      && docker-php-ext-download redis 2.2.7 \
      && docker-php-ext-configure redis --enable-redis-igbinary \
-     && docker-php-ext-install redis
+     && docker-php-ext-install redis \
+
+     && rm -Rf /tmp/pear \
+     && apt-get autoclean \
+     && apt-get clean \
+     && rm -rf /var/lib/apt/lists/*
 
  COPY ./php-fpm.conf /usr/local/etc/
  COPY www /var/www/html
