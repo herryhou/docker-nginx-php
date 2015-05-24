@@ -3,14 +3,14 @@ set -e
 
 ext="$1"
 ver="$2"
-download = "$ext-$ver"
+getfile="$ext-$ver"
 
-if [ -z "$ver"]; then
-	download = "$ext"
+if [ -z "$ver" ]; then
+        getfile="$ext"
 fi
 
 mkdir -p /tmp/pear/download
 cd /tmp/pear/download
-pecl download $download
+pecl download $getfile
 mkdir -p /usr/src/php/ext/$ext
 tar -xvzf $ext-* -C /usr/src/php/ext/$ext --strip-components 1
