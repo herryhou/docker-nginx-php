@@ -1,6 +1,10 @@
 FROM php:5.6-fpm
  # Install modules
+ COPY docker-php-ext-* /usr/local/bin/
  RUN ln -sf /usr/share/zoneinfo/Asia/Taipei  /etc/localtime \
+     && cp /usr/src/php/php.ini-production /usr/local/etc/php/php.ini \
+     && echo 'date.timezone = "Asia/Taipei"' >> /usr/local/etc/php/php.ini \
+
      && apt-get update && apt-get install -y \
          freetds-dev \
          libfreetype6-dev \
@@ -20,35 +24,18 @@ FROM php:5.6-fpm
      && docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/ \
      && docker-php-ext-install gd \
 
-     && pecl install igbinary-1.2.1 \
-     && echo "extension=igbinary.so" > /usr/local/etc/php/conf.d/ext-igbinary.ini \
+     && docker-php-ext-download igbinary 1.2.1 \
+     && docker-php-ext-install igbinary \
 
-     && mkdir -p /tmp/pear/download \
-
-     && cd /tmp/pear/download \
-     && pecl download memcached-2.2.0 \
-     && mkdir -p /usr/src/php/ext/memcached \
-     && tar -xvzf memcached-* -C /usr/src/php/ext/memcached --strip-components 1 \
-     && cd /usr/src/php/ext/memcached \
+     && docker-php-ext-download memcached 2.2.0 \
      && docker-php-ext-install memcached \
 
-     && cd /tmp/pear/download \
-     && pecl download memcache-2.2.7 \
-     && mkdir -p /usr/src/php/ext/memcache \
-     && tar -xvzf memcache-* -C /usr/src/php/ext/memcache --strip-components 1 \
-     && cd /usr/src/php/ext/memcache \
+     && docker-php-ext-download memcache 2.2.7 \
      && docker-php-ext-install memcache \
 
-     && cd /tmp/pear/download \
-     && pecl download redis-2.2.7 \
-     && mkdir -p /usr/src/php/ext/redis \
-     && tar -xvzf redis-* -C /usr/src/php/ext/redis --strip-components 1 \
-     && cd /usr/src/php/ext/redis \
+     && docker-php-ext-download redis 2.2.7 \
      && docker-php-ext-configure redis --enable-redis-igbinary \
-     && docker-php-ext-install redis \
-
-     && cp /usr/src/php/php.ini-production /usr/local/etc/php/php.ini \
-     && echo 'date.timezone = "Asia/Taipei"' >> /usr/local/etc/php/php.ini
+     && docker-php-ext-install redis
 
  COPY ./php-fpm.conf /usr/local/etc/
  COPY www /var/www/html
