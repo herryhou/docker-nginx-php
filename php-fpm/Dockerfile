@@ -23,32 +23,27 @@ FROM php:5.6-fpm
      && pecl install igbinary-1.2.1 \
      && echo "extension=igbinary.so" > /usr/local/etc/php/conf.d/ext-igbinary.ini \
 
-     && cd /tmp \
-     && pecl download memcached-2.2.0.tgz \
-     && tar -xvzf memcached-2.2.0.tgz \
-     && cd memcached-2.2.0 \
-     && phpize \
-     && ./configure && make && make install \
-     && echo "extension=memcached.so" > /usr/local/etc/php/conf.d/ext-memcached.ini \
-     && rm /tmp/memcached-2.2.0.tgz \
-     && rm -Rf /tmp/memcached-2.2.0 \
+     && mkdir -p /tmp/pear/download \
 
-     && cd /tmp \
-     && pecl download memcache-2.2.7.tgz \
-     && tar -xvzf memcache-2.2.7.tgz \
-     && cd memcache-2.2.7 \
-     && phpize \
-     && ./configure && make && make install \
-     && echo "extension=memcache.so" > /usr/local/etc/php/conf.d/ext-memcache.ini \
-     && rm /tmp/memcache-2.2.7.tgz \
-     && rm -Rf /tmp/memcache-2.2.7 \
+     && cd /tmp/pear/download \
+     && pecl download memcached-2.2.0 \
+     && mkdir -p /usr/src/php/ext/memcached \
+     && tar -xvzf memcached-* -C /usr/src/php/ext/memcached --strip-components 1 \
+     && cd /usr/src/php/ext/memcached \
+     && docker-php-ext-install memcached \
 
-     && cd /usr/src/php/ext/ \
-     && pecl download redis-2.2.7.tgz \
-     && tar -xvzf redis-2.2.7.tgz \
-     && rm redis-2.2.7.tgz \
-     && mv redis-2.2.7 redis \
-     && cd redis \
+     && cd /tmp/pear/download \
+     && pecl download memcache-2.2.7 \
+     && mkdir -p /usr/src/php/ext/memcache \
+     && tar -xvzf memcache-* -C /usr/src/php/ext/memcache --strip-components 1 \
+     && cd /usr/src/php/ext/memcache \
+     && docker-php-ext-install memcache \
+
+     && cd /tmp/pear/download \
+     && pecl download redis-2.2.7 \
+     && mkdir -p /usr/src/php/ext/redis \
+     && tar -xvzf redis-* -C /usr/src/php/ext/redis --strip-components 1 \
+     && cd /usr/src/php/ext/redis \
      && docker-php-ext-configure redis --enable-redis-igbinary \
      && docker-php-ext-install redis \
 
