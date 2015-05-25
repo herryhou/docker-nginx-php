@@ -1,0 +1,19 @@
+phpserver:
+  #image: mwphp:latest
+  build: ./php-fpm
+  #expose:
+  #  - "9000"
+  ports:
+    - 9000:9000
+  volumes:
+    - ./php-fpm/www:/var/www/html:ro
+
+nginx:
+  #image: mwnginx:latest
+  build: ./nginx
+  links:
+    - phpserver
+  ports:
+    - 80:80
+  volumes:
+    - ./nginx/www:/usr/share/nginx/html:ro
