@@ -20,7 +20,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
       maxwin.ssh.password = "vagrant"
       maxwin.vm.provision :shell, :path => "install_docker.sh"
       maxwin.vm.provision :shell, :path => "cleanup.sh"
-      maxwin.vm.provision :shell, :inline => "cd /vagrant && docker-compose up"
+      maxwin.vm.provision :shell, :inline => "cd /vagrant && docker-compose up -d"
     end
   end
 end
