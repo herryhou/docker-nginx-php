@@ -4,7 +4,7 @@ phpserver:
   #expose:
   #  - "9000"
   ports:
-    - 9000:9000
+    - 9000
   volumes:
     - ./php-fpm/www:/var/www/html:ro
 
