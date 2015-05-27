@@ -23,14 +23,17 @@
 9. redis v2.2.7 
 
 ##如果要另外安裝 php extension
+
 修改 ｀/php-fpm/Dockerfile｀, 加入以下3 行 
+```
      && docker-php-ext-download redis 2.2.7 \
      && docker-php-ext-configure redis --enable-redis-igbinary \
      && docker-php-ext-install redis \
+```
 其中 
-  redis 部分為 extension name, 2.2.7 為版本(可省略)
-  第二行的 ｀configure｀ 是設定參數,可省略
-  下載 extension 是呼叫｀pecl download｀
+  * redis 部分為 extension name, 2.2.7 為版本(可省略)
+  * 第二行的 ｀configure｀ 是設定參數,可省略
+  * 下載 extension 是呼叫｀pecl download｀
 
 
 
