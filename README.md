@@ -8,8 +8,8 @@
 
 ##調整虛擬機數量, vagrant 預設為啟動兩個 VMs
 
-1. 設定環境變數 NODES_NO＝1， 或者
-2. 修改檔案｀Vagrantfile｀ 裡面的  ｀num_nodes = (ENV['NODES_NO'] || 2).to_i｀ 的數字2
+1. 設定環境變數 `NODES_NO＝1`， 或者
+2. 修改檔案 `Vagrantfile` 裡面的  `num_nodes = (ENV['NODES_NO'] || 2).to_i` 的數字2
 
 ##預設安裝的 php extension
 1. mssql (freetds)
@@ -24,7 +24,7 @@
 
 ##如果要另外安裝 php extension
 
-修改 ｀/php-fpm/Dockerfile｀, 加入以下3 行 
+修改 `/php-fpm/Dockerfile`, 加入以下3 行 
 ```
      && docker-php-ext-download redis 2.2.7 \
      && docker-php-ext-configure redis --enable-redis-igbinary \
@@ -32,8 +32,8 @@
 ```
 其中 
   * redis 部分為 extension name, 2.2.7 為版本(可省略)
-  * 第二行的 ｀configure｀ 是設定參數,可省略
-  * 下載 extension 是呼叫｀pecl download｀
+  * 第二行的 `configure` 是設定參數,可省略
+  * 下載 extension 是呼叫`pecl download`
 
 
 
