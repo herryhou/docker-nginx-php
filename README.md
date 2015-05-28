@@ -1,6 +1,6 @@
 #安裝 nginx 以及 php-fpm docker
 
-##最簡單的使用方式 － 使用 vagrant 
+##最簡單的使用方式 － 使用 vagrant
 
 1. git clone https://github.com/herryhou/docker-nginx-php
 2. cd docker-nginx-php && vagrant up
@@ -20,20 +20,20 @@
 6. igbinary v1.2.1
 7. memcached v2.2.0
 8. memcache v2.2.7
-9. redis v2.2.7 
+9. redis v2.2.7
 
 ##如果要另外安裝 php extension
 
-修改 `/php-fpm/Dockerfile`, 加入以下3 行 
+修改 `/php-fpm/Dockerfile`, 加入以下3 行
 ```
      && docker-php-ext-download redis 2.2.7 \
      && docker-php-ext-configure redis --enable-redis-igbinary \
      && docker-php-ext-install redis \
 ```
-其中 
+其中
   * redis 部分為 extension name, 2.2.7 為版本(可省略)
   * 第二行的 `configure` 是設定參數,可省略
   * 下載 extension 是呼叫`pecl download`
 
-
+參考來源:https://github.com/William-Yeh/docker-enabled-vagrant/tree/master/debian-jessie
 
