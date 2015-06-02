@@ -70,3 +70,9 @@ sudo mv docker-compose /usr/local/bin
 curl -o docker-compose -L https://github.com/docker/compose/releases/download/$COMPOSE_VERSION/docker-compose-`uname -s`-`uname -m`
 chmod a+x docker-compose
 sudo mv docker-compose /usr/local/bin
+
+sudo echo "10.1.2.100 es1" >> /etc/hosts
+cp /vagrant/10-docker.conf   /etc/rsyslog.d/
+cp /vagrant/11-elasticsearch.conf   /etc/rsyslog.d/
+
+
