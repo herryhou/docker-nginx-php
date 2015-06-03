@@ -4,8 +4,9 @@ FROM php:5.6-fpm
  RUN ln -sf /usr/share/zoneinfo/Asia/Taipei  /etc/localtime \
      && cp /usr/src/php/php.ini-production /usr/local/etc/php/php.ini \
      && echo 'date.timezone = "Asia/Taipei"' >> /usr/local/etc/php/php.ini \
+     && sed -i "s/;cgi.fix_pathinfo=1/cgi.fix_pathinfo=0/" /usr/local/etc/php/php.ini
 
-     && apt-get update && apt-get install -y \
+ RUN apt-get update && apt-get install -y \
          freetds-dev \
          libfreetype6-dev \
          libjpeg62-turbo-dev \

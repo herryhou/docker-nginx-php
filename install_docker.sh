@@ -72,7 +72,9 @@ chmod a+x docker-compose
 sudo mv docker-compose /usr/local/bin
 
 sudo echo "10.1.2.100 es1" >> /etc/hosts
-cp /vagrant/10-docker.conf   /etc/rsyslog.d/
-cp /vagrant/11-elasticsearch.conf   /etc/rsyslog.d/
+sudo cp /vagrant/10-docker.conf   /etc/rsyslog.d/
+sudo cp /vagrant/11-elasticsearch.conf   /etc/rsyslog.d/
+sudo apt-get install rsyslog-elasticsearch
+sudo service rsyslog restart
 
 
