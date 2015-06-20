@@ -15,6 +15,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
       #ip = "base_ip.#{n+100}"
       maxwin.vm.network :private_network, ip: "10.1.1.#{n+100}"
       maxwin.vm.network "forwarded_port", guest: 80, host: n+8000
+      maxwin.vm.network "forwarded_port", guest: 8080, host: n+8090
       maxwin_index = n+1
       maxwin.vm.hostname = "maxwin-#{maxwin_index}"
       maxwin.ssh.password = "vagrant"
