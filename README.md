@@ -6,7 +6,25 @@
 2. cd docker-nginx-php && vagrant up
 3. 打開 browser, http://localhost:8000/iii.php
 
-##調整虛擬機數量, vagrant 預設為啟動兩個 VMs
+##vagrant 成功啟動後，就可以
+
+在瀏覽器裡
+
+1. Web  - ```http://localhost:8000/iii.php```
+2. cAdvisor - ``` http://localhost:8090/```
+
+###補從說明
+docker-compose 還沒有支援 logdriver=syslog 的設定,因此 container 裡面的nginx 的 log 不會送到 host 上的 rsyslog (再轉送去 es)。
+目前的臨時性解決方法是 - 手動 docker run 來啟動 nginx container
+
+```docker-compose kill nginx   && docker-compose rm  nginx ```
+
+```docker run --name vagrant_nginx_1 --log-driver="syslog" -h nginx -v /vagrant/nginx/www:/usr/share/nginx/html:ro --link vagrant_phpserver_1:phpserver -p 80:80 -d vagrant_nginx:latest```
+
+![k3](https://cloud.githubusercontent.com/assets/8790813/8267256/75b7551c-178b-11e5-93cd-bed707190b3e.png)
+
+
+##調整虛擬機數量, vagrant 預設為啟動1個 VMs
 
 1. 設定環境變數 `NODES_NO＝1`， 或者
 2. 修改檔案 `Vagrantfile` 裡面的  `num_nodes = (ENV['NODES_NO'] || 2).to_i` 的數字2
