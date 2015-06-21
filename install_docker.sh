@@ -6,8 +6,8 @@ export LANG=en_US.UTF-8
 export LANGUAGE=en_US.UTF-8
 
 
-readonly COMPOSE_VERSION=1.2.0
-readonly MACHINE_VERSION=v0.2.0
+readonly COMPOSE_VERSION=1.3.0
+readonly MACHINE_VERSION=v0.3.0
 
 readonly DOCKERGEN_VERSION=0.3.9
 readonly DOCKERGEN_TARBALL=docker-gen-linux-amd64-$DOCKERGEN_VERSION.tar.gz
@@ -15,8 +15,8 @@ readonly DOCKERGEN_TARBALL=docker-gen-linux-amd64-$DOCKERGEN_VERSION.tar.gz
 readonly DOCKERIZE_VERSION=v0.0.2
 readonly DOCKERIZE_TARBALL=dockerize-linux-amd64-$DOCKERIZE_VERSION.tar.gz
 
-readonly CADVISOR_VERSION=0.12.0
-readonly CADVISOR_EXE_URL=https://github.com/google/cadvisor/releases/download/$CADVISOR_VERSION/cadvisor
+#readonly CADVISOR_VERSION=0.15.1
+#readonly CADVISOR_EXE_URL=https://github.com/google/cadvisor/releases/download/$CADVISOR_VERSION/cadvisor
 
 # update packages
 sudo apt-get update
@@ -57,13 +57,6 @@ net.ipv4.ip_forward=1
 
 EOF_UFW
 #sudo ufw reload
-
-# install Docker Compose (was: Fig)
-# @see http://docs.docker.com/compose/install/
-curl -o docker-compose -L https://github.com/docker/compose/releases/download/$COMPOSE_VERSION/docker-compose-`uname -s`-`uname -m`
-chmod a+x docker-compose
-sudo mv docker-compose /usr/local/bin
-
 
 # install Docker Compose (was: Fig)
 # @see http://docs.docker.com/compose/install/

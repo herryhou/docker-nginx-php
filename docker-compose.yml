@@ -14,7 +14,7 @@ phpserver:
 nginx:
   #image: mwnginx:latest
   build: ./nginx
-  #log_driver: syslog
+  log_driver: syslog
   links:
     - phpserver
   ports:
