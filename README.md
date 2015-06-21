@@ -13,13 +13,6 @@
 1. Web  - ```http://localhost:8000/iii.php```
 2. cAdvisor - ``` http://localhost:8090/```
 
-###補從說明
-docker-compose 還沒有支援 logdriver=syslog 的設定,因此 container 裡面的nginx 的 log 不會送到 host 上的 rsyslog (再轉送去 es)。
-目前的臨時性解決方法是 - 手動 docker run 來啟動 nginx container
-
-```docker-compose kill nginx   && docker-compose rm  nginx ```
-
-```docker run --name vagrant_nginx_1 --log-driver="syslog" -h nginx -v /vagrant/nginx/www:/usr/share/nginx/html:ro --link vagrant_phpserver_1:phpserver -p 80:80 -d vagrant_nginx:latest```
 
 ![k3](https://cloud.githubusercontent.com/assets/8790813/8267256/75b7551c-178b-11e5-93cd-bed707190b3e.png)
 
