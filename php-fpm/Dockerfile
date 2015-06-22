@@ -44,5 +44,4 @@ FROM php:5.6-fpm
      && rm -rf /var/lib/apt/lists/*
 
  COPY ./php-fpm.conf /usr/local/etc/
- COPY www /var/www/html
  CMD ["php-fpm"]

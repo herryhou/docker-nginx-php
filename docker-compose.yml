@@ -1,3 +1,8 @@
+data:
+  build: ./data
+  volumes:
+        - /var/www/html
+
 phpserver:
   #image: mwphp:latest
   build: ./php-fpm
@@ -8,8 +13,15 @@ phpserver:
   #  - "9000"
   ports:
     - 9000
-  volumes:
-    - ./php-fpm/www:/var/www/html:ro
+  volumes_from:
+        - data
+
+varnish:
+  build: ./varnish
+  ports:
+    - 80:80
+  links:
+    - nginx:backend
 
 nginx:
   #image: mwnginx:latest
@@ -18,9 +30,9 @@ nginx:
   links:
     - phpserver
   ports:
-    - 80:80
-  volumes:
-    - ./nginx/www:/usr/share/nginx/html:ro
+    - 80
+  volumes_from:
+        - data
 
 cadvisor:
   image: google/cadvisor:latest
