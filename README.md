@@ -6,7 +6,18 @@
 2. cd docker-nginx-php && vagrant up
 3. 打開 browser, http://localhost:8000/iii.php
 
-##調整虛擬機數量, vagrant 預設為啟動兩個 VMs
+##vagrant 成功啟動後，就可以
+
+在瀏覽器裡
+
+1. Web  - ```http://localhost:8000/iii.php```
+2. cAdvisor - ``` http://localhost:8090/```
+
+
+![k3](https://cloud.githubusercontent.com/assets/8790813/8267256/75b7551c-178b-11e5-93cd-bed707190b3e.png)
+
+
+##調整虛擬機數量, vagrant 預設為啟動1個 VMs
 
 1. 設定環境變數 `NODES_NO＝1`， 或者
 2. 修改檔案 `Vagrantfile` 裡面的  `num_nodes = (ENV['NODES_NO'] || 2).to_i` 的數字2
